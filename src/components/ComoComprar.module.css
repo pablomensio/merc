@@ -1,0 +1,57 @@
+.seccion {
+  padding-block: clamp(88px, 12vh, 144px);
+}
+
+.pasos {
+  margin-top: clamp(40px, 6vh, 72px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 2px solid var(--negro);
+}
+
+.pasos li {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 28px clamp(20px, 3vw, 48px) 0 0;
+}
+
+.pasos li + li {
+  padding-left: clamp(20px, 3vw, 48px);
+  border-left: 1px solid var(--linea);
+}
+
+.numero {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 7vw, 112px);
+  line-height: 0.9;
+  margin-bottom: 8px;
+}
+
+.pasos h3 {
+  font-family: var(--font-titulo);
+  font-weight: 700;
+  font-size: clamp(28px, 2.4vw, 36px);
+  line-height: 1.05;
+}
+
+.pasos p {
+  color: var(--tenue);
+  max-width: 24em;
+}
+
+@media (max-width: 900px) {
+  .pasos {
+    grid-template-columns: 1fr;
+  }
+
+  .pasos li,
+  .pasos li + li {
+    padding: 28px 0;
+    border-left: 0;
+  }
+
+  .pasos li + li {
+    border-top: 1px solid var(--linea);
+  }
+}

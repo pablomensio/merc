@@ -1,0 +1,200 @@
+/* MERC Negocios Inmobiliarios — base de la web.
+   Colores tomados del logo y los brochures del cliente (no del design system en lo que vino
+   del prototipo de otro proveedor): negro de la tapa, gris claro de las láminas, gris del isotipo. */
+
+:root {
+  --negro: #000000;
+  --carbon: #141414;
+  --niebla: #f5f5f5;
+  --blanco: #ffffff;
+  --gris-isotipo: #c0c0c0;
+  /* Texto secundario: 7,5:1 sobre negro y 6,1:1 sobre niebla */
+  --tenue-oscuro: #9a9a9a;
+  --tenue-claro: #5c5c5c;
+  --linea-oscuro: #2e2e2e;
+  --linea-claro: #d4d4d4;
+
+  --font-display: var(--font-anton), Impact, "Arial Narrow", sans-serif;
+  --font-titulo: var(--font-antonio), "Arial Narrow", sans-serif;
+  --font-texto: var(--font-montserrat), system-ui, sans-serif;
+
+  --margen: clamp(20px, 5vw, 72px);
+  --ancho: 1440px;
+  --header: 64px;
+  --curva: cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--negro);
+  color: var(--blanco);
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: var(--header);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-texto);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--blanco);
+  color: var(--negro);
+}
+
+/* Bloques de color: toda sección es oscura o clara, como las láminas del brochure. */
+.oscuro {
+  background: var(--negro);
+  color: var(--blanco);
+  --tenue: var(--tenue-oscuro);
+  --linea: var(--linea-oscuro);
+  --boton-fondo: var(--blanco);
+  --boton-texto: var(--negro);
+}
+
+.claro {
+  background: var(--niebla);
+  color: var(--negro);
+  --tenue: var(--tenue-claro);
+  --linea: var(--linea-claro);
+  --boton-fondo: var(--negro);
+  --boton-texto: var(--blanco);
+}
+
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho);
+  margin-inline: auto;
+  padding-inline: var(--margen);
+}
+
+.titulo-seccion {
+  font-family: var(--font-titulo);
+  font-weight: 700;
+  font-size: clamp(40px, 5.4vw, 80px);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+
+.bajada {
+  font-size: clamp(17px, 1.35vw, 20px);
+  line-height: 1.55;
+  color: var(--tenue);
+  max-width: 34em;
+}
+
+/* Botones rectos, como el isotipo. */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 26px;
+  border: 1.5px solid var(--boton-fondo);
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
+  font-family: var(--font-texto);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    background-color 0.25s var(--curva),
+    color 0.25s var(--curva);
+}
+
+.boton:hover {
+  background: transparent;
+  color: var(--boton-fondo);
+}
+
+.boton-secundario {
+  background: transparent;
+  color: var(--boton-fondo);
+}
+
+.boton-secundario:hover {
+  background: var(--boton-fondo);
+  color: var(--boton-texto);
+}
+
+.saltar {
+  position: absolute;
+  left: 12px;
+  top: -80px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--blanco);
+  color: var(--negro);
+  font-weight: 600;
+}
+
+.saltar:focus {
+  top: 12px;
+}
+
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Lo que anima la entrada arranca oculto solo si hay JS y la persona acepta movimiento
+   (la clase la pone un script en <head>). A los 3 s se muestra igual, por si algo falla. */
+html.motion:not(.motion-listo) [data-anim] {
+  visibility: hidden;
+}

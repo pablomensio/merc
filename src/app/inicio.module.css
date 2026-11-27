@@ -1,0 +1,22 @@
+.loteos {
+  padding-block: clamp(96px, 14vh, 168px);
+}
+
+.cabeza {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 32px;
+  align-items: end;
+  margin-bottom: clamp(56px, 9vh, 112px);
+}
+
+.laminas {
+  display: grid;
+  gap: clamp(88px, 14vh, 160px);
+}
+
+@media (max-width: 900px) {
+  .cabeza {
+    grid-template-columns: 1fr;
+  }
+}

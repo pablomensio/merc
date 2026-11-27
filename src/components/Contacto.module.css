@@ -1,0 +1,92 @@
+.seccion {
+  padding-block: clamp(96px, 14vh, 160px);
+}
+
+.cabeza {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 32px;
+  align-items: end;
+}
+
+.opciones {
+  margin-top: clamp(40px, 6vh, 72px);
+  border-top: 1px solid var(--linea);
+}
+
+.opciones a {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(20px, 2.6vw, 32px) 0;
+  border-bottom: 1px solid var(--linea);
+  font-family: var(--font-titulo);
+  font-weight: 700;
+  font-size: clamp(30px, 4.2vw, 60px);
+  line-height: 1.05;
+  isolation: isolate;
+  transition:
+    color 0.35s var(--curva),
+    padding 0.35s var(--curva);
+}
+
+/* Al pasar el mouse, la fila se llena de blanco desde abajo: responde a la acción, no decora. */
+.opciones a::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(var(--margen) * -1);
+  background: var(--blanco);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s var(--curva);
+  z-index: -1;
+}
+
+.opciones a:hover,
+.opciones a:focus-visible {
+  color: var(--negro);
+  padding-left: 16px;
+}
+
+.opciones a:hover::before,
+.opciones a:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.canal {
+  font-family: var(--font-texto);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.telefono {
+  margin-top: 32px;
+  color: var(--tenue);
+}
+
+.telefono strong {
+  color: var(--blanco);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .cabeza {
+    grid-template-columns: 1fr;
+  }
+
+  .opciones a {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opciones a,
+  .opciones a::before {
+    transition: none;
+  }
+}

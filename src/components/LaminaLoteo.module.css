@@ -1,0 +1,140 @@
+.lamina {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(28px, 4.4vw, 80px);
+  align-items: center;
+}
+
+.lamina[data-invertida="true"] .foto {
+  order: 2;
+}
+
+.foto {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--linea);
+}
+
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.texto {
+  display: grid;
+  gap: 18px;
+}
+
+.lugar {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--tenue);
+}
+
+.nombre {
+  font-family: var(--font-titulo);
+  font-weight: 700;
+  font-size: clamp(44px, 5vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+
+.resumen {
+  font-size: 18px;
+  line-height: 1.5;
+  max-width: 26em;
+}
+
+.cifras {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 0;
+  margin-top: 10px;
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+}
+
+.cifras > div {
+  padding: 18px clamp(18px, 2.4vw, 36px) 16px 0;
+}
+
+.cifras > div + div {
+  padding-left: clamp(18px, 2.4vw, 36px);
+  border-left: 1px solid var(--linea);
+}
+
+.cifras dt {
+  font-size: 13px;
+  color: var(--tenue);
+  white-space: nowrap;
+}
+
+.cifras dd {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.numero {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(44px, 4.6vw, 68px);
+  line-height: 1;
+  margin-right: 4px;
+}
+
+.caracteristicas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+  font-size: 15px;
+}
+
+.caracteristicas li {
+  padding-left: 18px;
+  position: relative;
+}
+
+/* Un pequeño volumen del isotipo en lugar del punto. */
+.caracteristicas li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 7px;
+  height: 11px;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 18%, 100% 100%, 0 82%);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .lamina {
+    grid-template-columns: 1fr;
+  }
+
+  .lamina[data-invertida="true"] .foto {
+    order: 0;
+  }
+
+  .cifras {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cifras dt {
+    white-space: normal;
+  }
+
+  .caracteristicas {
+    grid-template-columns: 1fr;
+  }
+}

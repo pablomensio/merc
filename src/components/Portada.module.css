@@ -1,0 +1,165 @@
+.portada {
+  position: relative;
+  min-height: calc(100svh - var(--header));
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-rows: 1fr auto;
+  column-gap: clamp(24px, 5vw, 96px);
+  padding: clamp(40px, 7vh, 88px) var(--margen) 0;
+  max-width: var(--ancho);
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.texto {
+  align-self: center;
+  display: grid;
+  gap: clamp(24px, 3.4vh, 40px);
+  padding-bottom: clamp(32px, 6vh, 72px);
+}
+
+.titulo {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(64px, 9.4vw, 172px);
+  line-height: 0.9;
+  letter-spacing: -0.005em;
+}
+
+.linea {
+  display: block;
+  overflow: hidden;
+  /* Aire para que el recorte no muerda los acentos ni el punto. */
+  padding-block: 0.02em;
+  margin-block: -0.02em;
+}
+
+.linea > span {
+  display: block;
+}
+
+.bajada {
+  max-width: 30em;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.figura {
+  align-self: center;
+  justify-self: end;
+  display: grid;
+  gap: 14px;
+  width: min(100%, 520px);
+  padding-bottom: clamp(32px, 6vh, 72px);
+}
+
+.isotipo {
+  width: 100%;
+  height: auto;
+  max-height: min(66vh, 620px);
+  overflow: visible;
+}
+
+.lado {
+  fill: var(--gris-isotipo);
+}
+
+/* El contorno solo se ve mientras se «dibuja» el isotipo al cargar. */
+.contorno {
+  fill: none;
+  stroke: var(--blanco);
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+}
+
+/* Las caras del clipPath no se pintan: solo recortan la foto. */
+.caraChica,
+.caraAlta {
+  fill: #fff;
+}
+
+.figura figcaption {
+  font-size: 13px;
+  color: var(--tenue);
+  text-align: right;
+}
+
+.accesos {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--linea);
+}
+
+.accesos li + li {
+  border-left: 1px solid var(--linea);
+}
+
+.accesos a {
+  display: grid;
+  gap: 4px;
+  padding: 22px 28px 26px 0;
+  transition: color 0.25s var(--curva);
+}
+
+.accesos li + li a {
+  padding-left: 28px;
+}
+
+.accesoNombre {
+  font-family: var(--font-titulo);
+  font-weight: 700;
+  font-size: clamp(24px, 2.2vw, 32px);
+  line-height: 1.1;
+}
+
+.accesoDato {
+  font-size: 14px;
+  color: var(--tenue);
+}
+
+.accesos a:hover .accesoNombre {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+@media (max-width: 900px) {
+  .portada {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    padding-top: 36px;
+  }
+
+  .texto {
+    padding-bottom: 8px;
+  }
+
+  .titulo {
+    font-size: clamp(68px, 21vw, 120px);
+  }
+
+  .figura {
+    justify-self: center;
+    width: min(78%, 380px);
+    padding-block: 24px 40px;
+  }
+
+  .accesos {
+    grid-template-columns: 1fr;
+  }
+
+  .accesos li + li {
+    border-left: 0;
+    border-top: 1px solid var(--linea);
+  }
+
+  .accesos li + li a {
+    padding-left: 0;
+  }
+}

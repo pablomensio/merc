@@ -1,0 +1,62 @@
+.pie {
+  border-top: 1px solid var(--linea-oscuro);
+  padding-top: clamp(56px, 8vh, 96px);
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 3fr) minmax(0, 3fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.logo {
+  width: 132px;
+  height: auto;
+  /* El SVG trae margen interno: se compensa para alinear con la grilla. */
+  margin: -18px 0 0 -16px;
+}
+
+.grilla h2 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tenue);
+  margin-bottom: 14px;
+}
+
+.grilla ul {
+  display: grid;
+  gap: 8px;
+  font-size: 15px;
+}
+
+.numero {
+  white-space: nowrap;
+}
+
+.grilla a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 32px;
+  margin-top: clamp(48px, 7vh, 80px);
+  padding-block: 24px;
+  border-top: 1px solid var(--linea-oscuro);
+  font-size: 13px;
+  color: var(--tenue);
+}
+
+@media (max-width: 900px) {
+  .grilla {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .logo {
+    grid-column: 1 / -1;
+  }
+}
