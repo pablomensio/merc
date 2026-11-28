@@ -1,27 +1,128 @@
+/* Portada: el video ocupa casi todo el fondo, casi completo, y el logo que se arma queda a la
+   derecha; el texto va a la izquierda, sobre el video oscurecido. */
+
 .portada {
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* Ancho de la columna de texto: lo usa también el video para no meter el logo debajo. */
+  --ancho-texto: min(35vw, 520px);
+}
+
+/* ---------- Fondo: video (o su último cuadro) ---------- */
+
+.fondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  /* Las medidas del video se calculan contra la portada (cqw / cqh). */
+  container-type: size;
+}
+
+.capa {
+  position: absolute;
+  inset: 0;
+}
+
+/* El video va entero a lo alto, pegado arriba, y a lo ancho se pierde solo un 10 % de cada
+   lado. En el cuadro, el logo armado está centrado en el 52 % del ancho, ocupa un 36 % a lo
+   ancho y termina al 86 % del alto. */
+.medio {
+  /* Todo el ancho de la pantalla; en pantallas bajas se achica para que el logo quede arriba
+     de los accesos a los loteos (110 px) con 40 px de aire. */
+  --w: min(100cqw, (100cqh - 150px) * 2.07);
+  /* Dónde termina la columna de texto, medido desde el borde izquierdo de la pantalla. */
+  --fin-texto: calc(max(0px, (100cqw - var(--ancho)) / 2) + var(--margen) + var(--ancho-texto));
+  position: absolute;
+  top: 0;
+  /* Centro del logo: al 62 % del ancho, sin meterse debajo del texto y sin dejar un hueco
+     negro a la derecha. */
+  left: max(62cqw, var(--fin-texto) + 40px + var(--w) * 0.18, 100cqw - var(--w) * 0.48);
+  width: var(--w);
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transform: translateX(-52%);
+  /* Fundidos cortos: el borde izquierdo y el de abajo, para que no se vea dónde termina. */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 1%, #000 14%),
+    linear-gradient(to top, transparent 0%, #000 8%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 1%, #000 14%),
+    linear-gradient(to top, transparent 0%, #000 8%);
+  mask-composite: intersect;
+  /* Chrome deja ver un hilo de 1 px en el borde izquierdo aunque la máscara sea transparente. */
+  clip-path: inset(0 0 0 1%);
+}
+
+/* Sin JS o sin movimiento se ve el último cuadro; con movimiento, el video. */
+.video {
+  display: none;
+}
+
+:global(html.motion) .video {
+  display: block;
+}
+
+:global(html.motion) .final {
+  visibility: hidden;
+}
+
+.portada[data-sin-video] .video {
+  display: none;
+}
+
+.portada[data-sin-video] .final {
+  visibility: visible;
+}
+
+/* Oscurece el video detrás del texto (sin taparlo) y abajo, detrás de los accesos. */
+.fondo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, #000 0%, rgb(0 0 0 / 0.78) 7%, transparent 30%),
+    linear-gradient(to right, rgb(0 0 0 / 0.72) 0%, rgb(0 0 0 / 0.5) 30%, transparent 50%);
+  pointer-events: none;
+}
+
+.nota {
+  position: absolute;
+  top: 14px;
+  right: var(--margen);
+  z-index: 1;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: rgb(255 255 255 / 0.72);
+}
+
+/* ---------- Texto ---------- */
+
+.interior {
   min-height: calc(100svh - var(--header));
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   grid-template-rows: 1fr auto;
-  column-gap: clamp(24px, 5vw, 96px);
-  padding: clamp(40px, 7vh, 88px) var(--margen) 0;
   max-width: var(--ancho);
   margin-inline: auto;
-  overflow: hidden;
+  padding: clamp(40px, 7vh, 88px) var(--margen) 0;
 }
 
 .texto {
   align-self: center;
   display: grid;
-  gap: clamp(24px, 3.4vh, 40px);
+  gap: clamp(22px, 3vh, 36px);
+  width: min(100%, var(--ancho-texto));
   padding-bottom: clamp(32px, 6vh, 72px);
 }
 
 .titulo {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(64px, 9.4vw, 172px);
+  font-size: clamp(56px, 6.6vw, 120px);
   line-height: 0.9;
   letter-spacing: -0.005em;
 }
@@ -38,8 +139,10 @@
   display: block;
 }
 
-.bajada {
+/* Sobre el video, el gris de siempre se pierde: va un blanco atenuado. */
+.texto .bajada {
   max-width: 30em;
+  color: rgb(255 255 255 / 0.78);
 }
 
 .acciones {
@@ -48,56 +151,16 @@
   gap: 12px;
 }
 
-.figura {
-  align-self: center;
-  justify-self: end;
-  display: grid;
-  gap: 14px;
-  width: min(100%, 520px);
-  padding-bottom: clamp(32px, 6vh, 72px);
-}
-
-.isotipo {
-  width: 100%;
-  height: auto;
-  max-height: min(66vh, 620px);
-  overflow: visible;
-}
-
-.lado {
-  fill: var(--gris-isotipo);
-}
-
-/* El contorno solo se ve mientras se «dibuja» el isotipo al cargar. */
-.contorno {
-  fill: none;
-  stroke: var(--blanco);
-  stroke-width: 1.25;
-  vector-effect: non-scaling-stroke;
-  opacity: 0;
-}
-
-/* Las caras del clipPath no se pintan: solo recortan la foto. */
-.caraChica,
-.caraAlta {
-  fill: #fff;
-}
-
-.figura figcaption {
-  font-size: 13px;
-  color: var(--tenue);
-  text-align: right;
-}
+/* ---------- Accesos a los loteos ---------- */
 
 .accesos {
-  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  border-top: 1px solid var(--linea);
+  border-top: 1px solid rgb(255 255 255 / 0.18);
 }
 
 .accesos li + li {
-  border-left: 1px solid var(--linea);
+  border-left: 1px solid rgb(255 255 255 / 0.18);
 }
 
 .accesos a {
@@ -120,7 +183,7 @@
 
 .accesoDato {
   font-size: 14px;
-  color: var(--tenue);
+  color: rgb(255 255 255 / 0.72);
 }
 
 .accesos a:hover .accesoNombre {
@@ -129,25 +192,45 @@
   text-underline-offset: 6px;
 }
 
+/* ---------- Celulares y tablets: el video arriba, el texto abajo ---------- */
+
 @media (max-width: 900px) {
-  .portada {
-    grid-template-columns: 1fr;
+  .fondo {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    /* Una franja apaisada: se ve el 85 % del ancho del cuadro, con el logo al centro. */
+    height: min(66vw, 50svh);
+  }
+
+  .medio {
+    left: 50%;
+    width: max(100cqw, 178cqh);
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+    clip-path: none;
+  }
+
+  .fondo::after {
+    content: none;
+  }
+
+  .interior {
+    position: relative;
+    min-height: 0;
     grid-template-rows: auto;
-    padding-top: 36px;
+    /* El título se mete un poco en la parte donde el video se funde. */
+    margin-top: -12px;
+    padding-top: 0;
   }
 
   .texto {
-    padding-bottom: 8px;
+    width: 100%;
+    padding-bottom: 36px;
   }
 
   .titulo {
-    font-size: clamp(68px, 21vw, 120px);
-  }
-
-  .figura {
-    justify-self: center;
-    width: min(78%, 380px);
-    padding-block: 24px 40px;
+    font-size: clamp(60px, 17vw, 104px);
   }
 
   .accesos {
@@ -156,7 +239,7 @@
 
   .accesos li + li {
     border-left: 0;
-    border-top: 1px solid var(--linea);
+    border-top: 1px solid rgb(255 255 255 / 0.18);
   }
 
   .accesos li + li a {

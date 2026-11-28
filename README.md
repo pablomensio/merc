@@ -29,8 +29,13 @@ npm run lint
 - **Fuente de la marca:** el logo y los brochures de MERC, no prototipos de terceros. Por eso el
   gris claro es `#f5f5f5` (el de las láminas) y los botones son rectos, como el isotipo.
 - **Letras:** Anton (portada y cifras), Antonio (títulos), Montserrat (texto). Son las de los brochures.
-- **El momento fuerte es uno solo:** al cargar, el isotipo se dibuja y sus dos caras frontales se
-  llenan con la foto aérea real de Anisacate. Al bajar, la foto se desliza dentro (2.5D).
+- **El momento fuerte es uno solo:** la portada es un video hecho con Google Flow (vuelo sobre
+  sierras y el isotipo que se arma en el cielo), marcado como «Ilustración». Corre una vez y queda
+  en el último cuadro. Se ve casi completo (entero a lo alto, un 10 % menos a lo ancho), con el
+  logo a la derecha y el título a la izquierda, sobre el video oscurecido. Sin movimiento, o si el
+  navegador no deja reproducirlo, se ve ese último cuadro fijo.
+  El original está en `public/video/merc-portada.mp4` (720p, sin audio) y sus cuadros en
+  `src/assets/portada/`.
 - **Viviendas modulares:** el isotipo se arma en tres tiempos con el scroll (diseño, fabricación,
   montaje). Es un dibujo de la marca, no la imagen de una casa: no promete un modelo que no existe.
 - **Distancias:** barras proporcionales a los minutos, con la misma escala para los dos loteos.
